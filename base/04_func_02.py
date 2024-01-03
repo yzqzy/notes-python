@@ -131,3 +131,52 @@ test(nums, 5)  # [1, 2, 3, 4, 5]
 
 line()
 # ---------------------
+
+"""
+闭包
+"""
+
+
+def test(a):
+  def warapper():
+    print(a)
+  return warapper
+
+
+wrap = test(1)
+wrap()  # 1
+
+line()
+# ---------------------
+
+"""
+匿名函数
+
+lambda 函数是一种表达式
+"""
+
+obj = lambda: '这是一个匿名函数'
+print(obj())
+
+add_func = lambda a, b: a + b
+print(add_func(1, 2))
+
+
+students = [
+  { 'name': 'heora', 'age': 20 },
+  { 'name': 'detail', 'age': 30 },
+  { 'name': 'yueluo', 'age': 18 },
+]
+
+def sort_by_age(stu_list):
+  return stu_list['age']
+
+sorted_stus = sorted(students, key=sort_by_age)
+print(sorted_stus) # [{'name': 'yueluo', 'age': 18}, {'name': 'heora', 'age': 20}, {'name': 'detail', 'age': 30}]
+
+# students.sort(key=sort_by_age)
+students.sort(key=lambda x: x['age'])
+print(students) # [{'name': 'yueluo', 'age': 18}, {'name': 'heora', 'age': 20}, {'name': 'detail', 'age': 30}]
+
+line()
+# ---------------------
