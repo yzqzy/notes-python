@@ -163,20 +163,22 @@ print(add_func(1, 2))
 
 
 students = [
-  { 'name': 'heora', 'age': 20 },
-  { 'name': 'detail', 'age': 30 },
-  { 'name': 'yueluo', 'age': 18 },
+    {'name': 'heora', 'age': 20},
+    {'name': 'detail', 'age': 30},
+    {'name': 'yueluo', 'age': 18},
 ]
+
 
 def sort_by_age(stu_list):
   return stu_list['age']
 
+
 sorted_stus = sorted(students, key=sort_by_age)
-print(sorted_stus) # [{'name': 'yueluo', 'age': 18}, {'name': 'heora', 'age': 20}, {'name': 'detail', 'age': 30}]
+print(sorted_stus)  # [{'name': 'yueluo', 'age': 18}, {'name': 'heora', 'age': 20}, {'name': 'detail', 'age': 30}]
 
 # students.sort(key=sort_by_age)
 students.sort(key=lambda x: x['age'])
-print(students) # [{'name': 'yueluo', 'age': 18}, {'name': 'heora', 'age': 20}, {'name': 'detail', 'age': 30}]
+print(students)  # [{'name': 'yueluo', 'age': 18}, {'name': 'heora', 'age': 20}, {'name': 'detail', 'age': 30}]
 
 line()
 # ---------------------
