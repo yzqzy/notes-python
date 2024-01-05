@@ -113,5 +113,38 @@ print(son)  # 儿子 18 高中
 line()
 # ---------------------
 
+"""
+多态
+
+多台特征体现：
+1. 继承一个类
+2. 重写父类方法
+"""
+
+
+class Animal:
+  def run(self):
+    print('animal is run')
+
+
+class Dog(Animal):
+  def run(self):
+    print('dog is run')
+
+
+class Cat(Animal):
+  def run(self):
+    print('cat is run')
+
+
+animal = Animal()
+animal.run()
+
+dog = Dog()
+dog.run()
+
+cat = Cat()
+cat.run()
+
 line()
 # ---------------------
