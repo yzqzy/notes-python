@@ -70,3 +70,48 @@ for animal in animal_list:
 
 line()
 # ---------------------
+
+"""
+super
+
+子类调用父类方法
+"""
+
+
+class Father:
+  def __init__(self, name, age) -> None:
+    self.name = name
+    self.age = age
+
+  def __str__(self):
+    return f'{self.name} {self.age}'
+
+  def play_game(self):
+    print('父类方法')
+
+
+class Son(Father):
+  def __init__(self, name, age, collage) -> None:
+    super().__init__(name, age)
+    self.collage = collage
+
+  def play_game(self):
+    super().play_game()
+    print('子类方法')
+
+  def __str__(self):
+    return f'{super().__str__()} {self.collage}'
+
+
+father = Father('父亲', 40)
+print(father)  # 父亲 40
+
+son = Son('儿子', 18, '高中')
+son.play_game()
+print(son)  # 儿子 18 高中
+
+line()
+# ---------------------
+
+line()
+# ---------------------
