@@ -44,5 +44,20 @@ line()
 带参装饰器
 """
 
+
+def my_wrapper(func):
+  def _(msg):
+    print(f'[before]: {msg}')
+    return func(msg)
+  return _
+
+
+@my_wrapper
+def say(msg):
+  print(f'[msg]: {msg}')
+
+
+say('hello world')
+
 line()
 # ---------------------
