@@ -88,8 +88,47 @@ line()
 
 """
 迭代器代码优化
+
+迭代对象：在一个类的内部实现了 __iter__ 方法，这个类返回的对象就是迭代对象
+迭代器对象：在一个类中实现 __iter__ 方法、__next__ 方法，这个类返回的就是迭代器对象
+
+迭代器对象一定是迭代对象，迭代对象不一定是迭代器对象
 """
 
+
+class _List:
+  def __init__(self) -> None:
+    self.items = []
+    self.current = 0
+
+  def add(self, value):
+    self.items.append(value)
+
+  def __iter__(self):
+    return self
+
+  def __next__(self):
+    if self.current < len(self.items):
+      item = self.items[self.current]
+      self.current += 1
+      return item
+    else:
+      raise StopIteration
+
+
+list = _List()
+
+list.add(1)
+list.add(2)
+list.add(3)
+
+iterObj = iter(list)
+
+while True:
+  try:
+    print(next(iterObj))
+  except StopIteration:
+    break
 
 line()
 # ---------------------
