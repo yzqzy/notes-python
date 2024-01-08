@@ -1,3 +1,4 @@
+from abc import abstractmethod, ABC
 import inspect
 from typing import Any
 
@@ -135,6 +136,86 @@ name=yueluo, msg=hello world
 
 line()
 # ---------------------
+
+"""
+带参数类实现
+"""
+
+
+class Logging:
+  def __init__(self, level='info') -> None:
+    self.level = level
+    pass
+
+  def __call__(self, func) -> Any:
+    def _(*args, **kwds):
+      print(f'[{self.level}]: {func.__name__}')
+      func(*args, **kwds)
+    return _
+
+
+@Logging(level='error')
+def say(name, msg):
+  print(f'name={name}, msg={msg}')
+
+
+say('yueluo', 'hello world')
+"""
+[error]: say
+name=yueluo, msg=hello world
+"""
+
+line()
+# ---------------------
+
+"""
+装饰器总结
+"""
+
+
+class Test(ABC):
+  @classmethod
+  def info_01(cls):
+    pass
+
+  @staticmethod
+  def info_02():
+    pass
+
+  # @abstractmethod
+  # def info_03(self):
+  #   pass
+
+  # 将类方法作为属性使用
+  @property
+  def info_04(self):
+    return 1
+
+
+test = Test()
+
+print(test.info_04)  # 1
+
+line()
+# ---------------------
+
+
+class Foo:
+  def a(self):
+    pass
+
+  @property
+  def b(self):
+    pass
+
+  @property
+  def c(self):
+    return '1'
+
+
+foo = Foo()
+print(foo.b)  # None
+print(foo.c)  # 1
 
 line()
 # ---------------------
