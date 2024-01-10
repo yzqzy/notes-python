@@ -199,6 +199,15 @@ print(test.info_04)  # 1
 line()
 # ---------------------
 
+"""
+@property 
+
+1. 必须有返回值
+2. 不允许有形参
+
+页面分页，获取商品信息
+"""
+
 
 class Foo:
   def a(self):
@@ -216,6 +225,28 @@ class Foo:
 foo = Foo()
 print(foo.b)  # None
 print(foo.c)  # 1
+
+
+class Goods:
+
+  @property
+  def money(self):
+    return 100
+
+
+g = Goods()
+
+res = g.money
+print(res)  # 100
+
+
+line()
+# ---------------------
+
+"""
+分页处理
+"""
+
 
 line()
 # ---------------------
