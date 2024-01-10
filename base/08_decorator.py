@@ -200,7 +200,7 @@ line()
 # ---------------------
 
 """
-@property 
+@property (鸡肋功能、框架底层可能会用)
 
 1. 必须有返回值
 2. 不允许有形参
@@ -247,6 +247,56 @@ line()
 分页处理
 """
 
+
+class Page:
+  def __init__(self, page) -> None:
+    self.page = page
+    self.page_size = 10
+    pass
+
+  @property
+  def start(self):
+    val = (self.page - 1) * self.page_size
+    return val
+
+  @property
+  def end(self):
+    val = self.page * self.page_size
+    return val
+
+
+page = Page(10)
+
+print(page.start, page.end)  # 90 100
+
+line()
+# ---------------------
+
+"""
+骚操作
+"""
+
+
+class Goods:
+  @property
+  def price(self):
+    print('property ')
+
+  @price.setter
+  def price(self, value):
+    print(f'price setter {value}')
+
+  @price.deleter
+  def price(self):
+    print('price deleter')
+
+
+goods = Goods()
+
+goods.price  # property
+goods.price = 20  # price setter 20
+
+del goods.price  # price deleter
 
 line()
 # ---------------------
