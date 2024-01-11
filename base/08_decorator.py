@@ -1,5 +1,4 @@
-from abc import abstractmethod, ABC
-import inspect
+from abc import ABC
 from typing import Any
 
 from tools import line
@@ -297,6 +296,37 @@ goods.price  # property
 goods.price = 20  # price setter 20
 
 del goods.price  # price deleter
+
+line()
+# ---------------------
+
+
+class Goods:
+  def __init__(self) -> None:
+    self.origin_price = 100
+    self.discount = 0.8
+    pass
+
+  @property
+  def price(self):
+    return self.origin_price * self.discount
+
+  @price.setter
+  def price(self, value):
+    self.origin_price = value
+
+  @price.deleter
+  def price(self):
+    del self.origin_price
+
+
+goods = Goods()
+
+print(goods.price)  # 80.0
+goods.price = 200
+print(goods.price)  # 160.0
+# del goods.price
+# print(goods.price) # AttributeError: 'Goods' object has no attribute 'origin_price'
 
 line()
 # ---------------------
