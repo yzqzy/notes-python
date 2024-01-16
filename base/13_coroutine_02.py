@@ -72,6 +72,8 @@ async def main():
 
 future 类是 task 类的基类, task 对象只有运算得到返回值后, await 的对象才能传回值并且向下运行。
 这个功能就是 future 对象来实现的。future 源码中存在一个 _state, 一旦 _state 值变成 finished, await 就不会继续等待。
+
+future 偏向于底层，一般不会使用。
 """
 
 
@@ -91,7 +93,58 @@ async def main():
 
   return 'main value'
 
-value = asyncio.run(main())
-print(value)
+# value = asyncio.run(main())
+# print(value)
+
+# ---------------------
+
+"""
+future 异常处理
+
+1. 获取不到值时, await 堵塞
+2. awiat 解阻塞的前提是 future 对象有返回值
+3. awiat 获取到返回值之后 future 的对象状态转为完成
+"""
+
+
+async def main():
+  print('running')
+  loop = asyncio.get_running_loop()  # 获取一个正在运行的事件循环
+  fut = loop.create_future()  # 只创建对象, 没有绑定任务, 没有返回值
+  # fut.set_result('mock value') # 设置返回值后 await 会解除阻塞
+  await fut
+
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(main())
+
+# ---------------------
+
+"""
+future 对象使用
+
+低版本解释器可能会使用 (老版本写法, 3.5/3.6 使用比较多)
+"""
+
+
+async def work():
+  print('work is running')
+  await asyncio.sleep(1)
+  return 'return value'
+
+
+async def main():
+  future_list = [asyncio.ensure_future(work()) for _ in range(2)]
+  result_list = await asyncio.gather(*future_list)
+  print(result_list)
+
+
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(main())
+
+# ---------------------
+
+"""
+线程和协程中的 future 对象
+"""
 
 # ---------------------
