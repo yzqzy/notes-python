@@ -1,5 +1,9 @@
+import time
 import random
 import asyncio
+import requests
+
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
 # ---------------------
 
@@ -145,6 +149,185 @@ async def main():
 
 """
 线程和协程中的 future 对象
+
+1. 两者没有关系，但是行为类似
+2. task 对象中存在 result 方法
+3. 使用方式基本一致
+"""
+
+# 这里的 future 和协程中的 future 没有任何关系
+# from concurrent.futures import Future
+
+
+def work(num):
+  print('task is running')
+  time.sleep(1)
+  print(num)
+  return 'return value'
+
+
+# 创建线程池
+# pool = ThreadPoolExecutor(max_workers=2)
+
+# for _ in range(4):
+#   fut = pool.submit(work, _)
+#   print(fut)  # <Future at 0x1052136d0 state=running>
+#   print(fut.result())  # return value
+
+# 创建进程池
+# if __name__ == '__main__':
+#   pool = ProcessPoolExecutor(max_workers=2)
+
+#   for _ in range(4):
+#     fut = pool.submit(work, _)
+#     print(fut.result())  # return value
+
+# ---------------------
+
+"""
+交叉编程
+"""
+
+
+async def write(image_url, response):
+  file_name = 'base/imgs/' + image_url.split('/')[-1]
+
+  with open(file_name, 'wb') as f:
+    f.write(response.content)
+
+
+async def get_image(image_url):
+  print(f'start download {image_url}')
+
+  # 获取事件循环
+  loop = asyncio.get_running_loop()
+  # 默认创建线程池
+  future = loop.run_in_executor(None, requests.get, image_url)
+
+  # 创建的线程池返回的对象支持协程 await
+  response = await future
+
+  # 文件写入
+  await write(image_url, response)
+
+  print('download success')
+
+url_list = [
+    'http://pic.bizhi360.com/bbpic/98/10798.jpg',
+    'http://pic.bizhi360.com/bbpic/92/10792.jpg',
+    'http://pic.bizhi360.com/bbpic/86/10386.jpg',
+]
+
+# # 创建事件循环
+# loop = asyncio.get_event_loop()
+# tasks = [loop.create_task(get_image(url)) for url in url_list]
+# # 执行任务
+# loop.run_until_complete(asyncio.wait(tasks))
+
+# ---------------------
+
+"""
+自定义支持异步迭代的类（自定义异步迭代器）
+"""
+
+
+class AsyncIter:
+  def __init__(self) -> None:
+    self.count = 0
+    pass
+
+  async def iter_num(self):
+    await asyncio.sleep(random.random())
+    self.count += 1
+    if self.count == 100:
+      return None
+    return self.count
+
+  # 异步迭代协议（只需要返回对象，并且返回对象不是耗时）
+  def __aiter__(self):
+    return self
+
+  # next 获取下一个值之前可能遇到 io 等待
+  async def __anext__(self):
+    value = await self.iter_num()
+    if value is None:
+      raise StopAsyncIteration
+    return value
+
+
+async def iter_func():
+  async for item in AsyncIter():
+    print(item)
+
+# asyncio.run(iter_func())
+
+# ---------------------
+
+"""
+绑定回调
+"""
+
+
+async def work(name, gender):
+  print(f'{name} {gender}')
+  return f'return: {name}, {gender}'
+
+
+def get_return(task_obj):
+  print(f'{task_obj.result()}')
+
+
+# # 创建事件循环
+# loop = asyncio.get_event_loop()
+# # 协程对象转为 task 对象
+# task = loop.create_task(work('heora', 'male'))
+
+# # res = loop.run_until_complete(task)
+# # print(res)  # return: heora, male
+
+# task.add_done_callback(get_return)
+# loop.run_until_complete(task)
+
+# ---------------------
+
+"""
+异步上下文管理器
+"""
+
+
+class AsyncContextManger:
+  def __init__(self, conn=None) -> None:
+    self.conn = conn
+    pass
+
+  async def get_data(self):
+    return 'mock database crud'
+
+  async def __aenter__(self):
+    self.conn = await asyncio.sleep(random.random(), result='connect success')
+    print(self.conn)
+    return self
+
+  async def __aexit__(self, exc_type, exc_val, exc_tb):
+    await asyncio.sleep(2)
+    print('close database success')
+
+
+async def main():
+  async with AsyncContextManger() as fp:
+    result = await fp.get_data()
+    print(result)
+
+# asyncio.run(main())
+
+# ---------------------
+
+"""
+uvloop
+
+uvloop 是事件循环的替代方案，是一个三房库。使用 uvloop 可以在一定程序上提高事件循环的效率。
+uvloop 事件循环 > 默认 asyncio 的事件循环效率，比其他框架效率至少可以提高两倍，性能可以比肩 go 语言。
+windows 暂不支持 uvloop。
 """
 
 # ---------------------
