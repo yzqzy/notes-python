@@ -70,7 +70,21 @@ headers = {
 带参数请求
 """
 
-url = ''
 
+# url = 'https://www.baidu.com?wd=python'
+# response = requests.get(url)
+
+url = 'https://www.baidu.com/s'
+
+head = {
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1'
+}
+kw = {
+    'wd': 'python'
+}
+
+response = requests.get(url, params=kw, headers=head)
+
+print(response.content.decode('utf-8'))
 
 # # -----------------------------------
