@@ -83,8 +83,52 @@ kw = {
     'wd': 'python'
 }
 
-response = requests.get(url, params=kw, headers=head)
+# response = requests.get(url, params=kw, headers=head)
 
-print(response.content.decode('utf-8'))
+# print(response.content.decode('utf-8'))
+
+# # -----------------------------------
+
+"""
+post 请求
+
+1. POST 比 GET 更加安全，因为 GET 请求参数在 URL 中，容易被浏览器缓存，而 POST 请求参数在请求体中，不会被缓存。
+2. POST 请求可以上传大量数据，而 GET 请求的 URL 长度有限制。
+"""
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+}
+data = {
+    'column': 'szse_latest',
+    'pageNum': '1',
+    'pageSize': '30',
+    'sortName': '',
+    'sortType': '',
+    'clusterFlag': 'true'
+}
+
+url = 'http://www.cninfo.com.cn/new/disclosure'
+
+# response = requests.post(url, headers=headers, data=data)
+
+# print(response.text)
+# print(response.json())
+
+# # -----------------------------------
+
+"""
+proxy
+
+"""
+
+proxies = {
+    'http': 'http://110.12.211.140:80',
+}
+
+url = 'http://httpbin.org/ip'
+response = requests.get(url, proxies=proxies)
+
+print(response.text)
 
 # # -----------------------------------
