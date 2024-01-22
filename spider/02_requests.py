@@ -120,15 +120,22 @@ url = 'http://www.cninfo.com.cn/new/disclosure'
 """
 proxy
 
+可以用这个网址测试代理是否成功，如果代理有问题就不使用这个代理地址。
 """
 
 proxies = {
     'http': 'http://110.12.211.140:80',
 }
 
-url = 'http://httpbin.org/ip'
-response = requests.get(url, proxies=proxies)
+# url = 'http://httpbin.org/ip'
+# response = requests.get(url, proxies=proxies)
 
-print(response.text)
+# print(response.text)
+
+# # -----------------------------------
+
+"""
+
+"""
 
 # # -----------------------------------
