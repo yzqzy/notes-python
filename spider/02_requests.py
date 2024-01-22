@@ -135,7 +135,83 @@ proxies = {
 # # -----------------------------------
 
 """
+处理 cookie
+
+1. cookie 字符串放在 headers 中
+2. cookie 字典传给请求方法的 cookies 参数接收
+3. 使用 requests 提供的 session 模块
+"""
+
+url = 'http://www.cninfo.com.cn/new/disclosure'
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Cookie': 'JSESSIONID=F0318ECF99317377DECBAB9ABDBE4179; SF_cookie_4=17470996; insert_cookie=45380249; routeId=.uc1; _sp_ses.2141=*; _sp_id.2141=73ef8a62-1c03-4e40-b5d8-b2b30148e70e.1705832961.2.1705964771.1705833595.fd0a2368-dd81-43db-814d-ad0296defc4b'
+}
+data = {
+    'column': 'szse_latest',
+    'pageNum': '1',
+    'pageSize': '30',
+    'sortName': '',
+    'sortType': '',
+    'clusterFlag': 'true'
+}
+
+# response = requests.post(url, headers=headers, data=data)
+# print(response.json())
+
+# sesstion 处理 cookie, 会话保持
+session = requests.session()
+
+url = 'http://www.cninfo.com.cn/new/commonUrl?url=disclosure/list/notice#szse'
+
+response = session.get(url, headers={
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+})
+# print(response.cookies)
+
+url = 'http://www.cninfo.com.cn/new/disclosure'
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+}
+data = {
+    'column': 'szse_latest',
+    'pageNum': '1',
+    'pageSize': '30',
+    'sortName': '',
+    'sortType': '',
+    'clusterFlag': 'true'
+}
+response = session.post(url, headers=headers, data=data)
+# print(response.request.headers)
+
+# # -----------------------------------
 
 """
+cookieJar
+"""
+
+cookies = requests.utils.dict_from_cookiejar(response.cookies)
+print(cookies)
+print(response.cookies.get_dict())
+print(cookies == response.cookies.get_dict())  # True
+
+# # -----------------------------------
+
+"""
+忽略证书错误
+"""
+
+# response = requests.get('https://www.12306.cn', verify=False)
+
+# # -----------------------------------
+
+
+"""
+超时参数使用
+
+这个方法也可以用来检测代理IP质量，如果一个代理IP很长时间没有响应，添加超时后会报错，可以删除这个IP
+"""
+
+# response = requests.get('https://www.baidu.com', timeout=2)
 
 # # -----------------------------------
