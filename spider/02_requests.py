@@ -1,5 +1,7 @@
 import requests
 
+from retrying import retry
+
 # # -----------------------------------
 
 """
@@ -213,5 +215,32 @@ print(cookies == response.cookies.get_dict())  # True
 """
 
 # response = requests.get('https://www.baidu.com', timeout=2)
+
+# # -----------------------------------
+
+"""
+retrying 模块
+
+使用超时参数可以加快整体请求速度，但是在正常的网页浏览过程中，还会存在速度很慢的情况，这时我们可以选择刷新页面。
+
+pip install retrying
+
+1. retrying 模块是用来处理网络请求失败的，可以自动重试，直到成功为止。
+2. 通过装饰器的方式使用，可以让被装饰的函数反复执行
+3. retry 中可以传入参数 stop_max_attempt_number 用来设置最大重试次数，默认是3次。
+4. retry 中可以传入参数 wait_fixed 用来设置每次重试的间隔时间，默认是1000ms。
+5. retry 中可以传入参数 retry_on_exception 用来设置是否重试异常，默认是True。
+"""
+
+
+@retry(stop_max_attempt_number=3, wait_fixed=1000)
+def get_baidu():
+  response = requests.get('https://www.baidu.com', timeout=2)
+  if response.status_code != 200:
+    raise Exception('请求失败')
+  return response.text
+
+
+print(get_baidu())
 
 # # -----------------------------------
