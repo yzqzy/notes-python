@@ -42,22 +42,22 @@ re 模块:
   - findall 匹配所有符合规则的子串
   - sub 替换操作，将符合规则的子串替换为其他字符串
 
-Match
+Match 匹配一个
   - group() 返回匹配到的字符串
   - start() 返回匹配到的字符串的起始位置
   - end() 返回匹配到的字符串的结束位置
   - span() 返回匹配到的字符串的起始和结束位置
 
-Search
+Search 匹配一个
   - group() 返回匹配到的字符串
   - start() 返回匹配到的字符串的起始位置
   - end() 返回匹配到的字符串的结束位置
   - span() 返回匹配到的字符串的起始和结束位置
 
-findall
+findall 匹配多个
   - 返回所有匹配到的子串的列表
 
-sub
+sub 替换
   - 将所有匹配到的子串替换为其他字符串
 """
 
@@ -99,6 +99,92 @@ str2 = 'Hello'
 result1 = re.match('[hH]ello', str1)
 result2 = re.match('[hH]ello', str2)
 # print(result1.group(), result2.group())  # hello Hello
+
+str = '1hello'
+result = re.match('[0123456789]hello', str)
+# print(result.group())  # 1hello
+
+# ret = re.match('长江\d号', '长江7号')
+# print(ret.group())  # 长江7号
+
+# ret = re.match('\D', '长江7号')
+# print(ret.group())  # 长
+
+# ret = re.match('\D', '长江7号')
+# print(ret.group())  # 长
+
+# ret = re.match('hello\sworld', 'hello world')
+# print(ret.group())  # hello world
+
+# ret = re.match('hello\Sworld', 'helloYworld')
+# print(ret.group())  # helloYworld
+
+ret = re.match('hello\wworld', 'helloAworld')
+# print(ret.group())  # helloAworld
+
+# # -----------------------------------
+
+"""
+findall
+  
+返回所有匹配到的子串的列表
+"""
+
+res = re.findall('\d', 'tu12adas32')
+# print(res)  # ['1', '2', '3', '2']
+
+"""
+sub
+"""
+
+res = re.sub('\d', '_', 'tu12adas32')
+# print(res)  # tu__adas__
+
+# # -----------------------------------
+
+"""
+compile
+
+修饰符
+- re.l 使匹配对大小写不敏感
+- re.L 使匹配对大小写敏感
+- re.M 使 ^ 和 $ 匹配字符串的开头和结尾，即使它们出现在字符串的中间，多行匹配
+- re.S 使 . 匹配包括换行符在内的所有字符
+- re.U 使 \w, \W, \b, \B, \d, \D, \s, \S 匹配 Unicode 字符
+- re.X 使正则表达式可以用更加灵活的语法
+
+将正则表达式编译成 Pattern 对象, 加快匹配速度
+"""
+
+p = re.compile('\d', re.S)
+res = p.findall('tu12adas32')
+# print(res)  # ['1', '2', '3', '2']
+
+# # -----------------------------------
+
+"""
+匹配多个字符
+
+*    匹配0个或多个字符
++    匹配1个或多个字符
+?    匹配0个或1个字符
+{n}  匹配n个字符
+{n,} 匹配n个或多个字符
+{n,m} 匹配n-m个字符
+"""
+
+# * 匹配0个或多个字符
+# 需求：匹配出第一个字母为大写字符、后面都是小写字母并且小写字母可有可无
+ret = re.match('[A-Z][a-z]*', 'Hellodsada')
+# print(ret.group())  # Hellodsada
+
+# + 匹配1个或多个字符
+# 需求：匹配一个字符串，第一个字符是t，最一个字符是o，之间至少有一个字符
+# ret = re.match('t.+o', 'to')
+# ret = re.match('t.+o', 'too')
+# print(ret.group())  # too
+
+# ? 匹配0个或1个字符
 
 
 # # -----------------------------------
