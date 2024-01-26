@@ -182,9 +182,43 @@ ret = re.match('[A-Z][a-z]*', 'Hellodsada')
 # 需求：匹配一个字符串，第一个字符是t，最一个字符是o，之间至少有一个字符
 # ret = re.match('t.+o', 'to')
 # ret = re.match('t.+o', 'too')
-# print(ret.group())  # too
+# ret = re.match('t.+o', 'toxxxo')
+# print(ret.group())  # toxxxo
 
 # ? 匹配0个或1个字符
+# 需求：匹配出这样的数据，https，可能有 s，可能没有
+ret = re.match('https?', 'https')
+# ret = re.match('https?', 'http')
+# print(ret.group())
 
+# {n} 匹配括号内出现的次数
+# 需求：匹配出8-20位的密码，可以是大小写英文字母、数字、下划线
+ret = re.match('[0-9a-zA-Z_]{8,20}', '12345678')
+ret = re.match('[0-9a-zA-Z_]{8,20}', '_12345678')
+# print(ret.group())
+
+# # -----------------------------------
+
+"""
+^ 匹配字符串的开头
+$ 匹配字符串的结尾
+"""
+
+# 匹配以数字开头的数据
+ret = re.match('^\d.*', '123456')
+# print(ret.group())
+
+# 匹配以数字结尾的数据
+ret = re.match('.*\d$', '123456')
+# print(ret.group())
+
+# 匹配以数字开头和数字结尾的数据
+ret = re.match('^\d.*\d$', '123sss456')
+# print(ret.group())
+
+# 第一个字符除 aeiou 都匹配
+# ^ 在 [] 内时，表示取反
+ret = re.match('[^aeiou].*', 'bcdfghjklmnpqrstvwxyz')
+# print(ret.group())
 
 # # -----------------------------------
