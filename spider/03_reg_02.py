@@ -20,8 +20,8 @@ import re
 #     print(f'fruit {ret.group()}')
 
 # 需求: 匹配出 163,126,qq 等邮箱
-ret = re.match('[a-zA-Z0-9_]{4,20}@(163|11|126)\.com', 'hello@163@com')
-# ret = re.match('[a-zA-Z0-9_]{4,20}@(163|11|126)\.com', 'hello@126@com')
-print(ret.group())  # 163@com
+ret = re.match('[a-zA-Z0-9_]{4,20}@(163|11|qq)\.com', 'hello@163.com')
+print(ret.group())  # hello@163.com
+print(ret.group(1))  # 163
 
 # # -----------------------------------
