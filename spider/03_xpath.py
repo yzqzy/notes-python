@@ -1,3 +1,4 @@
+from lxml import etree
 
 # # -----------------------------------
 
@@ -17,7 +18,24 @@ xpath 语法:
   text()   选取元素的文本内容
 """
 
-# 实例
+"""
+https://movie.douban.com/top250
 
+选取所有 h1 下的文本
+  //h1/text()
+获取所有 a 标签的 href
+  //a/@href
+获取 html 下 head 中 title 的文本
+  /html/head/title/text()
+获取 html 下 head 中 link 标签的 href
+  /html/head/link/@href
+"""
 
-# # -----------------------------------
+"""
+查找特定节点
+
+选取 class 属性为 s2 的 span 节点
+  //span[@class="s2"]
+选取属于 ul 子标签的第一个 li 标签
+  //ul/li[1]
+"""
