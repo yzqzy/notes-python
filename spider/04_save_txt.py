@@ -40,7 +40,7 @@ title_list = soup.select('div.css-1g4zjtl > a')
 
 for title in title_list:
   print(title.get_text())
-  with open('spider/zhihu_explore.txt', 'a', encoding='utf-8') as f:
+  with open('spider/data_zhihu_explore.txt', 'a', encoding='utf-8') as f:
     f.write(title.get_text() + '\n')
 
 # # -----------------------------------
