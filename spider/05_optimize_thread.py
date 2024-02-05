@@ -74,7 +74,7 @@ class Iqiyi(object):
     return thread_list
 
   def run(self):
-    # 创建线程池
+    # 创建线程
     thread_list = self.create_theads()
 
     for t in thread_list:
