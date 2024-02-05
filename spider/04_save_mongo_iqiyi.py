@@ -1,5 +1,6 @@
 import pymongo
 import requests
+import time
 
 """
 MongoDB 数据库
@@ -48,5 +49,9 @@ class Iqiyi():
 
 
 if __name__ == '__main__':
+  t1 = time.time()
+
   iqiyi = Iqiyi()
   iqiyi.run()
+
+  print('总耗时：', time.time() - t1)  # 5.0624401569366455
