@@ -5,6 +5,10 @@ import time
 
 """
 异步IO优化
+
+aiohttp 是一个异步 HTTP 客户端/服务端框架，它基于 asyncio 实现。
+aiomysql 异步操作 MySQL 数据库。
+aiofiles 异步操作文件。
 """
 
 """
