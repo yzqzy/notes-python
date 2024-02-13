@@ -99,17 +99,36 @@ hook 实现有两个条件：
 
 > 最常用：hookie cookie
 
+hook 可以借助控制面板，油猴插件或者抓包工具进行注入。
+
 ### hook 方法
 
 在 JavaScript 中，我们可以使用 hook 方法来修改函数的执行逻辑。例如 JSON.stringify() 方法用于将 JavaScript 对象转换为 JSON 字符串，JSON.parse() 方法可以将 JSON 字符串转换为 JavaScript 对象。某些站点在向服务器传输用户名密码时，就会用到这两个方法。
 
 ```js
-(function(
+(function() {
   var stringify = JSON.stringify;
   JSON.stringify = function(params){
     console.log('hooked stringify', params)
     debugger
     return stringify.apply(this, arguments)
   }
-))()
+})()
+```
+
+### hook xhr 请求
+
+定义变量 open 保留原始 `XMLHttppRequest.open` 方法，然后重写 open 方法，在 open 方法中添加 hook 逻辑，在 hook 逻辑中，我们可以修改 xhr 请求的 url、method、headers 等参数。
+
+```js
+(function() {
+  var open = XMLHttpRequest.prototype.open;
+  window.XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+    if (url.indexOf('example.com') > -1) {
+      console.log('hooked open', method, url, async, user, password)
+      debugger
+    }
+    open.apply(this, arguments)
+  }
+})()
 ```
