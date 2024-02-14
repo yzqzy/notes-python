@@ -120,6 +120,8 @@ hook 可以借助控制面板，油猴插件或者抓包工具进行注入。
 
 定义变量 open 保留原始 `XMLHttppRequest.open` 方法，然后重写 open 方法，在 open 方法中添加 hook 逻辑，在 hook 逻辑中，我们可以修改 xhr 请求的 url、method、headers 等参数。
 
+识别 xhr 请求：请求头 x-requested-with 包含 XMLHttpRequest。
+
 ```js
 (function() {
   var open = XMLHttpRequest.prototype.open;
@@ -131,4 +133,39 @@ hook 可以借助控制面板，油猴插件或者抓包工具进行注入。
     open.apply(this, arguments)
   }
 })()
+```
+
+Interceptors 拦截器：
+
+* 请求拦截器：发送请求之前，可以借助一些函数对请求的内容和参数做一些检测。如果有问题可以直接取消请求。
+* 响应拦截器：当服务器返回响应数据时，响应拦截器会在会在我们得到响应数据之前，对响应数据做一些处理。
+
+```js
+axios.interceptors.request.use(function (config) {
+  if (config.url.indexOf('example.com') > -1) {
+    console.log('hooked request', config)
+    debugger
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(function (response) {
+  if (response.config.url.indexOf('example.com') > -1) {
+    console.log('hooked response', response)
+    debugger
+  }
+  return response;
+}, function (error) {
+  return Promise.reject(error);
+});
+```
+
+> android 系统中，经常会进行抓包检测、模拟器检测、VPN 检测，我们可以借助 hook 技术进行处理。
+
+### hook cookie
+
+```js
+
 ```
