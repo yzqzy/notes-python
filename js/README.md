@@ -135,6 +135,9 @@ hook 可以借助控制面板，油猴插件或者抓包工具进行注入。
 })()
 ```
 
+apply: 调用函数时，将 this 绑定到第一个参数，并将其他参数传给函数。
+call: 调用函数时，将 this 绑定到 null，并将参数列表作为参数传入。
+
 Interceptors 拦截器：
 
 * 请求拦截器：发送请求之前，可以借助一些函数对请求的内容和参数做一些检测。如果有问题可以直接取消请求。
@@ -160,6 +163,8 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   return Promise.reject(error);
 });
+
+axios.get('https://example.com/api/data')
 ```
 
 > android 系统中，经常会进行抓包检测、模拟器检测、VPN 检测，我们可以借助 hook 技术进行处理。
