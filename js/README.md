@@ -171,6 +171,30 @@ axios.get('https://example.com/api/data')
 
 ### hook cookie
 
-```js
+cookie 钩子用于定位 cookie 中关键参数生成位置。
 
+```js
+Object.defineProperty(document, 'cookie', {
+  get: function() {
+    console.log('hooked cookie', document.cookie)
+    debugger
+    return document.cookie;    
+  },
+  set: function(value) {
+    console.log('hooked set cookie', value)
+    debugger
+    document.cookie = value;
+  }
+})
 ```
+
+缺少环境可以将 js 放到 HTML 中，就是真实的环境。自动化相对比较慢。
+
+## python 执行 JS
+
+1. 读取文件的方式
+
+2. 使用 express 开放接口，执行 js 代码（不给源码，直接给调用接口）。
+
+如果执行 js 遇到 window、document 等全局变量，可以用 vm2 库，将 js 代码在沙箱环境中执行。
+或者对全局变量进行重写，对环境进行补充，使其可以执行 js 代码。

@@ -2,3 +2,5 @@ testings/
 __pycache__
 imgs/
 driver/
+
+node_modules/
