@@ -120,8 +120,8 @@ DES 算法的工作流程如下：
 2. 如果 Mode 位解密，则用 Key 对 Data 的密码形式进行解密，生成 Data 的明文形式作为 DES 算法的输出。
 
 工作模式归纳：
-* ECB: Electronic Codebook，电码本模式。最常见、最简单。
-* CBC: Cipher Block Chaining，密码块链接模式。
+* ECB: Electronic Codebook，电码本模式。最常见、最简单（没有 IV 向量）。
+* CBC: Cipher Block Chaining，密码块链接模式（初始向量 IV 必须，与明文异或操作）。
 * CFB: Cipher Feedback，密文反馈模式。
 * OFB: Output Feedback，输出反馈模式。
 * CTR: Counter，计数模式。
@@ -133,6 +133,12 @@ DES 算法的工作流程如下：
 * ISO10126Padding: 1 填充，不推荐。
 * NoPadding: 不填充，不推荐。
 * Pkcs7Padding: 7 填充，推荐。
+
+```javascript
+```
+
+```python
+```
 
 ### AES
 
