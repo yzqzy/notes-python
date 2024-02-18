@@ -104,9 +104,47 @@ DES是一种分组加密算法，以64位为一组进行加密，密钥长度为
 2. 加密速度：快
 3. 安全性：高
 4. 加密模式：ECB、CBC、CFB、OFB、CTR、GCM
-5. 填充方式：PKCS5Padding、ISO10126Padding、NoPadding
+5. 填充方式：ZeroPadding、PKCS5Padding、ISO10126Padding、NoPadding、Pkcs7Padding
+
+> 逆向搜索关键字：decrypt、encrypt、DES、iv、padding
+
+密钥的长度为 56 位（密钥通常表示为 64 位，前 8 位为奇偶校验位，后 56 位为密钥）。
+
+DES 算法的入口参数有 3 个: Key、Data、Mode。
+* Key 为 8 个字节共 64 位，是 DES 算法的工作密钥。
+* Data 也是 8 个字节，64 位，是待加密的数据，如果超出 8 字节，则需要进行分组处理。
+* Mode 是 DES 的工作方式，主要有两种，加密或解密。
+
+DES 算法的工作流程如下：
+1. 如果 Mode 位加密，则用 Key 对数据 Data 进行加密，生成 Data 的密码形式作为 DES 算法的输出。
+2. 如果 Mode 位解密，则用 Key 对 Data 的密码形式进行解密，生成 Data 的明文形式作为 DES 算法的输出。
+
+工作模式归纳：
+* ECB: Electronic Codebook，电码本模式。最常见、最简单。
+* CBC: Cipher Block Chaining，密码块链接模式。
+* CFB: Cipher Feedback，密文反馈模式。
+* OFB: Output Feedback，输出反馈模式。
+* CTR: Counter，计数模式。
+* GCM: Galois/Counter Mode，计数器模式。
+
+填充方式：
+* ZeroPadding: 0 填充，不推荐。
+* PKCS5Padding: 5 填充，推荐。
+* ISO10126Padding: 1 填充，不推荐。
+* NoPadding: 不填充，不推荐。
+* Pkcs7Padding: 7 填充，推荐。
 
 ### AES
+
+AES是一种分组加密算法，以128位为一组进行加密，密钥长度为128位、192位、256位。AES是一个对称算法，加密和解密使用同一个密钥。
+
+1. 密钥长度：128位、192位、256位
+2. 加密速度：快
+3. 安全性：高
+4. 加密模式：ECB、CBC、CFB、OFB、CTR、GCM
+5. 填充方式：PKCS5Padding、ISO10126Padding、NoPadding
+
+> 逆向搜索关键字：decrypt、encrypt、AES、iv、padding
 
 ## 非对称加密
 
