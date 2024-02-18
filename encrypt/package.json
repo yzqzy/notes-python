@@ -1,0 +1,15 @@
+{
+  "name": "encrypt",
+  "version": "1.0.0",
+  "description": "摘要算法。MD5、SHA、HMAC 等。",
+  "main": "encrypt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}
